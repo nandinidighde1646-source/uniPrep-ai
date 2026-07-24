@@ -1,0 +1,5 @@
+export type ChatMessage = {
+  id: number;
+  sender: "user" | "ai";
+  message: string;
+};

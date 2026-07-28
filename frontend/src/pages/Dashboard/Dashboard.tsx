@@ -1,3 +1,7 @@
+import { dashboardItems } from "../../data/dashboard";
+import DashboardCard from "../../components/DashboardCard/DashboardCard";
+
+
 function Dashboard() {
   return (
     <div className="p-8">
@@ -9,60 +13,22 @@ function Dashboard() {
       <p className="text-gray-600 mb-8">
         Track your preparation and access your resources.
       </p>
+      
+      <h2 className="text-2xl font-semibold mb-6">
+        Quick Access
+      </h2>
 
-
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-
-
-        <div className="bg-white shadow-md rounded-xl p-6">
-          <h2 className="text-xl font-semibold">
-            📚 Notes
-          </h2>
-
-          <p className="text-gray-600 mt-2">
-            Access your study material
-          </p>
-        </div>
-
-
-
-        <div className="bg-white shadow-md rounded-xl p-6">
-          <h2 className="text-xl font-semibold">
-            📄 PYQs
-          </h2>
-
-          <p className="text-gray-600 mt-2">
-            Practice previous papers
-          </p>
-        </div>
-
-
-
-        <div className="bg-white shadow-md rounded-xl p-6">
-          <h2 className="text-xl font-semibold">
-            🤖 AI Chat
-          </h2>
-
-          <p className="text-gray-600 mt-2">
-            Clear your doubts
-          </p>
-        </div>
-
-
-
-        <div className="bg-white shadow-md rounded-xl p-6">
-          <h2 className="text-xl font-semibold">
-            📝 Mock Tests
-          </h2>
-
-          <p className="text-gray-600 mt-2">
-            Test your preparation
-          </p>
-        </div>
-
-
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {dashboardItems.map((item) => (
+          <DashboardCard
+            key={item.title}
+            icon={item.icon}
+            title={item.title}
+            description={item.description}
+            path={item.path}
+          />
+        ))}
       </div>
-
 
     </div>
   );

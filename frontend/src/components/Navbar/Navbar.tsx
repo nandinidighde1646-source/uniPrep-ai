@@ -10,24 +10,30 @@ function Navbar() {
 
   const { user, logout } = useAuth();
   const navigate = useNavigate();
-
-  const navLinks = [
-    { name: "Home", path: "/" },
-    { name: "Notes", path: "/notes" },
-    { name: "PYQs", path: "/pyqs" },
-    { name: "AI Chat", path: "/ai-chat" },
-  
-  ];
-
+  const handleLogout = () => {
+  logout();
+  setOpen(false);
+  navigate("/");
+};
+ 
+ const navLinks = [
+  {
+    name: "Home",
+    path: user ? "/dashboard" : "/",
+  },
+];
 
   return (
     <nav className="flex justify-between items-center px-6 md:px-[60px] py-5 bg-[#1e1e2f] border-b border-[#333] relative">
 
 
       {/* Logo */}
-      <h2 className="text-white text-3xl font-semibold cursor-pointer">
+      <Link
+        to="/"
+        className="text-white text-3xl font-semibold"
+        >
         UniPrep AI
-      </h2>
+        </Link>
 
 
 
@@ -73,55 +79,34 @@ function Navbar() {
 
         ))}
 
+          {user ? (
+  <>
+    <Link
+      to="/dashboard"
+      onClick={() => setOpen(false)}
+      className="text-white text-[17px] transition hover:text-[#4f8cff]"
+    >
+      Dashboard
+    </Link>
 
+    <Link
+      to="/profile"
+      onClick={() => setOpen(false)}
+      className="text-white text-[17px] transition hover:text-[#4f8cff]"
+    >
+      Profile
+    </Link>
 
-        {user ? (
+   <button
+  onClick={handleLogout}
+  className="block w-full md:w-auto text-left text-white text-[17px] py-2 md:py-0 transition hover:text-[#4f8cff]"
+>
+  Logout
+</button>
+  </>
+) : (
 
-          <>
-            <Link
-              to="/dashboard"
-              onClick={() => setOpen(false)}
-              className="text-white text-[17px] transition hover:text-[#4f8cff]"
-            >
-              Dashboard
-            </Link>
-                     
-                     <Link
-               to="/add-note"
-             onClick={() => setOpen(false)}
-            className="text-white text-[17px] transition hover:text-[#4f8cff]"
-             >
-              Add Note
-              </Link>
-
-               <Link
-                to="/profile"
-                onClick={() => setOpen(false)}
-                className="text-white text-[17px] transition hover:text-[#4f8cff]"
-                >
-                 Profile
-                 </Link>
-
-                 <Link to="/settings"
-                  onClick={() => setOpen(false)}
-                className="text-white text-[17px] transition hover:text-[#4f8cff]"
-                >
-                 Settings</Link>
-
-            <button
-              onClick={() => {
-               logout();
-                setOpen(false);
-                navigate("/login");
-               }}
-                className="block w-full md:w-auto text-left text-white text-[17px] py-2 md:py-0 transition hover:text-[#4f8cff]"
-               >
-               Logout
-               </button>
-          </>
-
-
-        ) : (
+        
 
           <>
 

@@ -5,7 +5,7 @@ type NotesCardProps = {
   semester: string;
   branch: string;
   fileUrl: string;
-  onDelete: (id: number) => void;
+  
 };
 
 function NotesCard({
@@ -15,7 +15,6 @@ function NotesCard({
   semester,
   branch,
   fileUrl,
-  onDelete,
 }: NotesCardProps) {
   return (
     <div className="bg-white rounded-xl shadow-md hover:shadow-xl transition duration-300 p-6 border">
@@ -53,12 +52,7 @@ function NotesCard({
           ⬇ Download
         </a>
 
-        <button
-          onClick={() => onDelete(id)}
-          className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 transition"
-        >
-          🗑 Delete
-        </button>
+      
       </div>
     </div>
   );

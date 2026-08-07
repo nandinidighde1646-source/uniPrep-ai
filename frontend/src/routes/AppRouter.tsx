@@ -15,7 +15,14 @@ import AIChat from "../pages/AIChat/AIChat";
 import Profile from "../pages/Profile/Profile";
 import Settings from "../pages/Settings/Settings";
 import AddNote from "../pages/AddNote/AddNote";
+import UploadPYQ from "../pages/UploadPYQ/UploadPYQ";
 
+import AdminLayout from "../layouts/AdminLayout";
+
+import AdminDashboard from "../pages/Admin/AdminDashboard";
+import ManageNotes from "../pages/Admin/ManageNotes";
+import ManagePYQs from "../pages/Admin/ManagePYQs";
+import ManageUsers from "../pages/Admin/ManageUsers";
 
 function AppRouter() {
   return (
@@ -30,6 +37,7 @@ function AppRouter() {
         <Route path="profile" element={<Profile />} />
         <Route path="settings" element={<Settings />} />
         <Route path="/add-note" element={<AddNote />} />
+        <Route path="/upload-pyq" element={<UploadPYQ />} />
         <Route
           path="dashboard"
           element={
@@ -43,6 +51,16 @@ function AppRouter() {
       {/* Pages without Navbar/Footer */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+
+
+{/* Admin Routes */}
+<Route path="/admin" element={<AdminLayout />}>
+  <Route index element={<AdminDashboard />} />
+  <Route path="notes" element={<ManageNotes />} />
+  <Route path="pyqs" element={<ManagePYQs />} />
+  <Route path="users" element={<ManageUsers />} />
+</Route>
+
 
       {/* 404 */}
       <Route path="*" element={<NotFound />} />

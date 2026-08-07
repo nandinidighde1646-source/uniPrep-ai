@@ -56,7 +56,7 @@ export const createNote = async (req: Request, res: Response) => {
     success: true,
     data: note,
   });
-};
+}
 
 export const updateNote = async (req: Request, res: Response) => {
   const { id } = req.params;

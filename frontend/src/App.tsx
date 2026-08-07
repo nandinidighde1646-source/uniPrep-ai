@@ -12,6 +12,7 @@ function App() {
       />
 
       <AppRouter />
+      <Toaster position="top-right" />
     </>
   );
 }

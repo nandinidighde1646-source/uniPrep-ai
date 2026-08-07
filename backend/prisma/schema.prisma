@@ -7,6 +7,15 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+
 model Note {
   id        Int      @id @default(autoincrement())
   title     String
@@ -17,10 +26,13 @@ model Note {
   createdAt DateTime @default(now())
 }
 
-model User {
+model PYQ {
   id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
+  title     String
+  subject   String
+  semester  Int
+  branch    String
+  fileUrl   String
   createdAt DateTime @default(now())
 }
+

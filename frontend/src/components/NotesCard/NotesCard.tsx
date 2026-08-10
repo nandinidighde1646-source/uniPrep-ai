@@ -9,7 +9,7 @@ type NotesCardProps = {
 };
 
 function NotesCard({
-  id,
+  
   title,
   subject,
   semester,

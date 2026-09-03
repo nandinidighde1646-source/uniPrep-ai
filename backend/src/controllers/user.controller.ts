@@ -4,7 +4,8 @@ import {
   getAllUsersService,
   getUserByIdService,
   deleteUserService,
-} from "../services/user.service";
+} from "../services/user.service.js";
+
 
 export const getAllUsers = async (
   req: Request,
@@ -13,19 +14,20 @@ export const getAllUsers = async (
   try {
     const users = await getAllUsersService();
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: users,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Get all users error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to fetch users",
     });
   }
 };
+
 
 export const getUserById = async (
   req: Request,
@@ -33,6 +35,13 @@ export const getUserById = async (
 ) => {
   try {
     const id = Number(req.params.id);
+
+    if (isNaN(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user ID",
+      });
+    }
 
     const user = await getUserByIdService(id);
 
@@ -43,19 +52,20 @@ export const getUserById = async (
       });
     }
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: user,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Get user error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to fetch user",
     });
   }
 };
+
 
 export const deleteUser = async (
   req: Request,
@@ -64,16 +74,23 @@ export const deleteUser = async (
   try {
     const id = Number(req.params.id);
 
+    if (isNaN(id)) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid user ID",
+      });
+    }
+
     await deleteUserService(id);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       message: "User deleted successfully",
     });
   } catch (error) {
-    console.error(error);
+    console.error("Delete user error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to delete user",
     });

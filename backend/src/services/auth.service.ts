@@ -2,7 +2,6 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import prisma from "../prisma/prisma.js";
 
-
 export const registerService = async (
   name: string,
   email: string,
@@ -14,7 +13,6 @@ export const registerService = async (
       email,
     },
   });
-  
 
   if (existingUser) {
     throw new Error("User with this email already exists");
@@ -24,6 +22,7 @@ export const registerService = async (
   const hashedPassword = await bcrypt.hash(password, 10);
 
   // Create user
+  // role will automatically be USER because of Prisma's default
   const user = await prisma.user.create({
     data: {
       name,
@@ -36,6 +35,7 @@ export const registerService = async (
     id: user.id,
     name: user.name,
     email: user.email,
+    role: user.role,
     createdAt: user.createdAt,
   };
 };
@@ -53,7 +53,8 @@ export const loginService = async (
   if (!user) {
     throw new Error("Invalid email or password");
   }
-    const isPasswordValid = await bcrypt.compare(
+
+  const isPasswordValid = await bcrypt.compare(
     password,
     user.password
   );
@@ -63,23 +64,25 @@ export const loginService = async (
   }
 
   const token = jwt.sign(
-  {
-    userId: user.id,
-    email: user.email,
-  },
-  process.env.JWT_SECRET as string,
-  {
-    expiresIn: "7d",
-  }
-);
+    {
+      userId: user.id,
+      email: user.email,
+      role: user.role,
+    },
+    process.env.JWT_SECRET as string,
+    {
+      expiresIn: "7d",
+    }
+  );
 
- return {
-  token,
-  user: {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    createdAt: user.createdAt,
-  },
-};
+  return {
+    token,
+    user: {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      createdAt: user.createdAt,
+    },
+  };
 };

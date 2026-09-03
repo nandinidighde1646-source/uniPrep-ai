@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import toast from "react-hot-toast";
 
 import NotesCard from "../../components/NotesCard/NotesCard";
 import SearchBar from "../../components/SearchBar/SearchBar";
@@ -7,7 +6,6 @@ import FilterBar from "../../components/FilterBar/FilterBar";
 
 import {
   getNotes,
-  deleteNote,
 } from "../../services/notes.service";
 
 type Note = {
@@ -60,26 +58,7 @@ function Notes() {
     }
   };
    */
-    const handleDelete = async (id: number) => {
-  const confirmed = window.confirm(
-    "Are you sure you want to delete this note?"
-  );
-
-  if (!confirmed) return;
-
-  try {
-    await deleteNote(id);
-
-    setNotes((prevNotes) =>
-      prevNotes.filter((note) => note.id !== id)
-    );
-
-    toast.success("Note deleted successfully!");
-  } catch (err) {
-    console.error(err);
-    toast.error("Failed to delete note");
-  }
-};
+   
 
   const filteredNotes = notes.filter(
     (note) =>
@@ -140,7 +119,7 @@ function Notes() {
             semester={note.semester.toString()}
             branch={note.branch}
             fileUrl={note.fileUrl}
-            onDelete={handleDelete}
+            
           />
         ))}
       </div>

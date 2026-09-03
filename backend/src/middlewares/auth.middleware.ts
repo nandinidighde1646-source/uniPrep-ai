@@ -1,6 +1,12 @@
 import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 
+export interface AuthUser {
+  userId: number;
+  email: string;
+  role: "USER" | "ADMIN";
+}
+
 export const authenticate = (
   req: Request,
   res: Response,
@@ -27,11 +33,11 @@ export const authenticate = (
     const decoded = jwt.verify(
       token,
       process.env.JWT_SECRET as string
-    );
+    ) as AuthUser;
 
     console.log("Decoded:", decoded);
 
-    (req as any).user = decoded;
+    req.user = decoded;
 
     next();
   } catch (error) {

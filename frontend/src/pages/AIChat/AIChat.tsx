@@ -1,9 +1,8 @@
 import { useState } from "react";
-
+import api from "../../services/api";
 import ChatWindow from "../../components/ChatWindow/ChatWindow";
 import ChatInput from "../../components/ChatInput/ChatInput";
 
-import { aiResponses } from "../../data/aiResponses";
 import type { ChatMessage } from "../../types/chat";
 
 function AIChat() {
@@ -15,23 +14,47 @@ function AIChat() {
     },
   ]);
 
-  const handleSend = (text: string) => {
+  const [loading, setLoading] = useState(false);
+
+  const handleSend = async (text: string) => {
     const userMessage: ChatMessage = {
       id: Date.now(),
       sender: "user",
       message: text,
     };
 
-    const response =
-      aiResponses[text.toLowerCase()] || aiResponses.default;
+    setMessages((prev) => [...prev, userMessage]);
+    setLoading(true);
 
-    const aiMessage: ChatMessage = {
-      id: Date.now() + 1,
-      sender: "ai",
-      message: response,
-    };
+    try {
+      const response = await api.post(
+  "/api/ai/chat",
+  {
+    message: text,
+    history: messages,
+  }
+);
 
-    setMessages((prev) => [...prev, userMessage, aiMessage]);
+      const aiMessage: ChatMessage = {
+        id: Date.now() + 1,
+        sender: "ai",
+        message: response.data.message,
+      };
+
+      setMessages((prev) => [...prev, aiMessage]);
+    } catch (error) {
+      console.error("AI Chat Error:", error);
+
+      const errorMessage: ChatMessage = {
+        id: Date.now() + 1,
+        sender: "ai",
+        message: "Sorry, I couldn't generate a response. Please try again.",
+      };
+
+      setMessages((prev) => [...prev, errorMessage]);
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -44,6 +67,12 @@ function AIChat() {
       <ChatWindow messages={messages} />
 
       <ChatInput onSend={handleSend} />
+
+      {loading && (
+        <div className="text-sm text-gray-500 px-4 pb-2">
+          UniPrep AI is thinking...
+        </div>
+      )}
 
     </div>
   );

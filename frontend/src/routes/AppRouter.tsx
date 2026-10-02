@@ -24,6 +24,8 @@ import ManageNotes from "../pages/Admin/ManageNotes";
 import ManagePYQs from "../pages/Admin/ManagePYQs";
 import ManageUsers from "../pages/Admin/ManageUsers";
 
+import AdminRoute from "../components/AdminRoute/AdminRoute";
+
 function AppRouter() {
   return (
     <Routes>
@@ -54,7 +56,14 @@ function AppRouter() {
 
 
 {/* Admin Routes */}
-<Route path="/admin" element={<AdminLayout />}>
+<Route
+  path="/admin"
+  element={
+    <AdminRoute>
+      <AdminLayout />
+    </AdminRoute>
+  }
+>
   <Route index element={<AdminDashboard />} />
   <Route path="notes" element={<ManageNotes />} />
   <Route path="pyqs" element={<ManagePYQs />} />

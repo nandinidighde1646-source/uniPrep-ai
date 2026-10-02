@@ -5,6 +5,8 @@ import authRouter from "./routes/auth.routes.js";
 import pyqsRouter from "./routes/pyqs.routes.js";
 import userRoutes from "./routes/user.routes.js";
 
+import aiRouter from "./routes/ai.routes.js";
+
 const app = express();
 
 app.use(
@@ -21,6 +23,7 @@ app.use("/api/notes", notesRouter);
 app.use("/api/pyqs", pyqsRouter);
 app.use("/api/auth", authRouter);
 app.use("/api/users", userRoutes);
+app.use("/api/ai", aiRouter);
 app.get("/", (req, res) => {
   res.json({
     message: "Welcome to UniPrep AI API 🚀",

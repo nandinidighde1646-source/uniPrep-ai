@@ -1,3 +1,4 @@
+import ReactMarkdown from "react-markdown";
 import type { ChatMessage as ChatMessageType } from "../../types/chat";
 
 type ChatMessageProps = {
@@ -20,7 +21,13 @@ function ChatMessage({ message }: ChatMessageProps) {
             : "bg-gray-200 text-gray-800"
         }`}
       >
-        {message.message}
+        {isUser ? (
+          message.message
+        ) : (
+          <div className="prose prose-sm max-w-none">
+            <ReactMarkdown>{message.message}</ReactMarkdown>
+          </div>
+        )}
       </div>
     </div>
   );

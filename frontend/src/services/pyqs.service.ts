@@ -1,3 +1,4 @@
+
 import api from "./api";
 
 export interface CreatePYQData {
@@ -5,6 +6,16 @@ export interface CreatePYQData {
   subject: string;
   semester: number;
   branch: string;
+  year: number;
+  pdf: File;
+}
+
+export interface UpdatePYQData {
+  title: string;
+  subject: string;
+  semester: number;
+  branch: string;
+  year: number;
   fileUrl: string;
 }
 
@@ -14,7 +25,16 @@ export const getPYQs = async () => {
 };
 
 export const createPYQ = async (data: CreatePYQData) => {
-  const response = await api.post("/api/pyqs", data);
+  const formData = new FormData();
+
+  formData.append("title", data.title);
+  formData.append("subject", data.subject);
+  formData.append("semester", String(data.semester));
+  formData.append("branch", data.branch);
+  formData.append("year", String(data.year));
+  formData.append("pdf", data.pdf);
+
+  const response = await api.post("/api/pyqs", formData);
   return response.data.data;
 };
 
@@ -25,7 +45,7 @@ export const deletePYQ = async (id: number) => {
 
 export const updatePYQ = async (
   id: number,
-  data: Partial<CreatePYQData>
+  data: Partial<UpdatePYQData>
 ) => {
   const response = await api.put(`/api/pyqs/${id}`, data);
   return response.data.data;

@@ -13,8 +13,9 @@ type User = {
   name: string;
   email: string;
   role: "USER" | "ADMIN";
+  college: string | null;
+  avatar: string | null;
 };
-
 
 type LoginData = {
   user: User;

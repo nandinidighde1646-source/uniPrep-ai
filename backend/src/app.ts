@@ -9,16 +9,19 @@ import aiRouter from "./routes/ai.routes.js";
 
 const app = express();
 
-app.use(
-  cors({
-    origin: "http://localhost:5173",
-    credentials: true,
-  })
-);
+const corsOptions = {
+  origin: [
+    "http://localhost:5173",
+    "https://9n4wtmqs-5173.inc1.devtunnels.ms",
+  ],
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 
 app.use(express.json());
-
+app.use("/uploads", express.static("uploads"));
 app.use("/api/notes", notesRouter);
 app.use("/api/pyqs", pyqsRouter);
 app.use("/api/auth", authRouter);

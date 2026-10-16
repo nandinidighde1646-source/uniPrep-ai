@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { uploadPYQPdf } from "../middlewares/upload.middleware.js";
 
 import {
   getAllPYQs,
@@ -18,7 +19,13 @@ router.get("/", authenticate, getAllPYQs);
 router.get("/:id", authenticate, getPYQById);
 
 // Admin only
-router.post("/", authenticate, requireAdmin, createPYQ);
+router.post(
+  "/",
+  authenticate,
+  requireAdmin,
+  uploadPYQPdf.single("pdf"),
+  createPYQ
+);
 router.put("/:id", authenticate, requireAdmin, updatePYQ);
 router.delete("/:id", authenticate, requireAdmin, deletePYQ);
 

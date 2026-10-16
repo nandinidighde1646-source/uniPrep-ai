@@ -15,12 +15,12 @@ function Navbar() {
     navigate("/");
   };
 
-  const navLinks = [
-    {
-      name: "Home",
-      path: user ? "/dashboard" : "/",
-    },
-  ];
+ const navLinks = [
+  {
+    name: "Home",
+    path: "/",
+  },
+];
 
   return (
     <nav className="bg-[#1e1e2f] px-6 py-5 flex items-center justify-between relative">
@@ -77,14 +77,15 @@ function Navbar() {
               Dashboard
             </Link>
 
-            <Link
-              to="/admin"
-              onClick={() => setOpen(false)}
-              className="text-white text-[17px] transition hover:text-[#4f8cff]"
-            >
-              Admin Panel
-            </Link>
-
+            {user.role === "ADMIN" && (
+  <Link
+    to="/admin"
+    onClick={() => setOpen(false)}
+    className="text-white text-[17px] transition hover:text-[#4f8cff]"
+  >
+    Admin Panel
+  </Link>
+)}
             <Link
               to="/profile"
               onClick={() => setOpen(false)}

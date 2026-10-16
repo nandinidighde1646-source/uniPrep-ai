@@ -18,6 +18,8 @@ model User {
   email     String   @unique
   password  String
   role      Role     @default(USER)
+  college   String?
+  avatar    String?
   createdAt DateTime @default(now())
 }
 
@@ -37,6 +39,7 @@ model PYQ {
   subject   String
   semester  Int
   branch    String
+  year      Int @default(2025)
   fileUrl   String
   createdAt DateTime @default(now())
 }

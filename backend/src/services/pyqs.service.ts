@@ -1,3 +1,4 @@
+
 import prisma from "../prisma/prisma.js";
 
 interface CreatePYQData {
@@ -5,24 +6,24 @@ interface CreatePYQData {
   subject: string;
   semester: number;
   branch: string;
+  year: number;
   fileUrl: string;
 }
 
-// Get all PYQs
+// Get all PYQs, newest exam year first
 export const getAllPYQs = async () => {
   return await prisma.pYQ.findMany({
-    orderBy: {
-      createdAt: "desc",
-    },
+    orderBy: [
+      { year: "desc" },
+      { createdAt: "desc" },
+    ],
   });
 };
 
 // Get PYQ by ID
 export const getPYQById = async (id: number) => {
   return await prisma.pYQ.findUnique({
-    where: {
-      id,
-    },
+    where: { id },
   });
 };
 
@@ -39,9 +40,7 @@ export const updatePYQ = async (
   data: Partial<CreatePYQData>
 ) => {
   return await prisma.pYQ.update({
-    where: {
-      id,
-    },
+    where: { id },
     data,
   });
 };
@@ -49,8 +48,6 @@ export const updatePYQ = async (
 // Delete PYQ
 export const deletePYQ = async (id: number) => {
   return await prisma.pYQ.delete({
-    where: {
-      id,
-    },
+    where: { id },
   });
 };

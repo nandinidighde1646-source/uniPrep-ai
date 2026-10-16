@@ -1,3 +1,4 @@
+
 import { Request, Response } from "express";
 
 import {
@@ -8,10 +9,10 @@ import {
   deleteNoteService,
 } from "../services/notes.service.js";
 
-export const getAllNotes = async (req: Request, res: Response) => {
+export const getAllNotes = async (_req: Request, res: Response) => {
   const notes = await getAllNotesService();
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     data: notes,
   });
@@ -29,20 +30,32 @@ export const getNoteById = async (req: Request, res: Response) => {
     });
   }
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     data: note,
   });
 };
 
 export const createNote = async (req: Request, res: Response) => {
-  const {
-    title,
-    subject,
-    semester,
-    branch,
-    fileUrl,
-  } = req.body;
+  const { title, subject, semester, branch } = req.body;
+
+  const fileUrl = req.file
+    ? `${req.protocol}://${req.get("host")}/uploads/notes/${req.file.filename}`
+    : req.body.fileUrl;
+
+  if (
+    !title ||
+    !subject ||
+    !semester ||
+    !branch ||
+    !fileUrl
+  ) {
+    return res.status(400).json({
+      success: false,
+      message:
+        "Title, subject, semester, branch, and a PDF or file URL are required.",
+    });
+  }
 
   const note = await createNoteService(
     title,
@@ -52,22 +65,15 @@ export const createNote = async (req: Request, res: Response) => {
     fileUrl
   );
 
-  res.status(201).json({
+  return res.status(201).json({
     success: true,
     data: note,
   });
-}
+};
 
 export const updateNote = async (req: Request, res: Response) => {
   const { id } = req.params;
-
-  const {
-    title,
-    subject,
-    semester,
-    branch,
-    fileUrl,
-  } = req.body;
+  const { title, subject, semester, branch, fileUrl } = req.body;
 
   const updatedNote = await updateNoteService(
     Number(id),
@@ -78,17 +84,18 @@ export const updateNote = async (req: Request, res: Response) => {
     fileUrl
   );
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     data: updatedNote,
   });
 };
+
 export const deleteNote = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   await deleteNoteService(Number(id));
 
-  res.status(200).json({
+  return res.status(200).json({
     success: true,
     message: "Note deleted successfully",
   });

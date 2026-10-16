@@ -56,26 +56,48 @@ export const getPYQById = async (
 };
 
 // Create PYQ
+
 export const createPYQ = async (
   req: Request,
   res: Response
 ) => {
   try {
-    const pyq = await pyqService.createPYQ(req.body);
+    const { title, subject, semester, branch, year } = req.body;
 
-    res.status(201).json({
+    const fileUrl = req.file
+      ? `${req.protocol}://${req.get("host")}/uploads/pyqs/${req.file.filename}`
+      : req.body.fileUrl;
+
+    if (!title || !subject || !semester || !branch || !year || !fileUrl) {
+      return res.status(400).json({
+        success: false,
+        message: "Title, subject, semester, branch, exam year, and PDF are required.",
+      });
+    }
+
+    const pyq = await pyqService.createPYQ({
+      title,
+      subject,
+      semester: Number(semester),
+      branch,
+      year: Number(year),
+      fileUrl,
+    });
+
+    return res.status(201).json({
       success: true,
       data: pyq,
     });
   } catch (error) {
-    console.error(error);
+    console.error("Create PYQ Error:", error);
 
-    res.status(500).json({
+    return res.status(500).json({
       success: false,
       message: "Failed to create PYQ",
     });
   }
 };
+
 
 // Update PYQ
 export const updatePYQ = async (

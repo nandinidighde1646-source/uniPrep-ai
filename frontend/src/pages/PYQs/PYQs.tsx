@@ -13,7 +13,7 @@ interface PYQ {
   subject: string;
   semester: number;
   branch: string;
-  
+  year: number;
   fileUrl: string;
 }
 
@@ -31,8 +31,11 @@ const fetchPYQs = async () => {
   try {
     setLoading(true);
 
-    const data = await getPYQs();
-    setPYQs(data);
+   const data = await getPYQs();
+
+console.log("PYQ API data:", data);
+
+setPYQs(data);
 
     setError("");
   } catch (err) {
@@ -112,6 +115,7 @@ useEffect(() => {
             subject={pyq.subject}
             semester={pyq.semester}
             branch={pyq.branch}
+              year={pyq.year}
             fileUrl={pyq.fileUrl}
               
           />

@@ -51,3 +51,11 @@ export const deletePYQ = async (id: number) => {
     where: { id },
   });
 };
+
+
+export const bulkCreatePYQs = async (data: CreatePYQData[]) => {
+  return await prisma.pYQ.createMany({
+    data,
+  });
+};
+

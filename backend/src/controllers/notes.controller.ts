@@ -1,5 +1,6 @@
 
 import { Request, Response } from "express";
+import { uploadPdfToSupabase } from "../services/storage.service.js";
 
 import {
   getAllNotesService,
@@ -36,40 +37,48 @@ export const getNoteById = async (req: Request, res: Response) => {
   });
 };
 
+
 export const createNote = async (req: Request, res: Response) => {
-  const { title, subject, semester, branch } = req.body;
+  try {
+    const { title, subject, semester, branch } = req.body;
 
-  const fileUrl = req.file
-    ? `${req.protocol}://${req.get("host")}/uploads/notes/${req.file.filename}`
-    : req.body.fileUrl;
+    const fileUrl = req.file
+      ? await uploadPdfToSupabase(req.file, "notes")
+      : req.body.fileUrl;
 
-  if (
-    !title ||
-    !subject ||
-    !semester ||
-    !branch ||
-    !fileUrl
-  ) {
-    return res.status(400).json({
-      success: false,
-      message:
-        "Title, subject, semester, branch, and a PDF or file URL are required.",
+    if (!title || !subject || !semester || !branch || !fileUrl) {
+      return res.status(400).json({
+        success: false,
+        message:
+          "Title, subject, semester, branch, and a PDF or file URL are required.",
+      });
+    }
+
+    const note = await createNoteService(
+      title,
+      subject,
+      Number(semester),
+      branch,
+      fileUrl
+    );
+
+    return res.status(201).json({
+      success: true,
+      data: note,
     });
-  }
+ } catch (error) {
+  console.error("Create Note Error:", error);
 
-  const note = await createNoteService(
-    title,
-    subject,
-    Number(semester),
-    branch,
-    fileUrl
-  );
-
-  return res.status(201).json({
-    success: true,
-    data: note,
+  return res.status(500).json({
+    success: false,
+    message:
+      error instanceof Error
+        ? error.message
+        : "Failed to create note.",
   });
+}
 };
+
 
 export const updateNote = async (req: Request, res: Response) => {
   const { id } = req.params;

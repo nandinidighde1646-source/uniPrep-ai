@@ -1,8 +1,10 @@
+
 type PYQCardProps = {
   title: string;
   subject: string;
   semester: number;
   branch: string;
+  year: number;
   fileUrl: string;
 };
 
@@ -11,6 +13,7 @@ function PYQCard({
   subject,
   semester,
   branch,
+  year,
   fileUrl,
 }: PYQCardProps) {
   return (
@@ -20,8 +23,13 @@ function PYQCard({
         {subject}
       </span>
 
+      {/* Year displayed near the top */}
+      <p className="mt-3 text-sm font-semibold text-gray-500">
+        Year: {year}
+      </p>
+
       {/* Title */}
-      <h2 className="text-xl font-semibold mt-4 text-gray-800">
+      <h2 className="text-xl font-semibold mt-3 text-gray-800">
         {title}
       </h2>
 

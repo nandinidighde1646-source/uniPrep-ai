@@ -1,4 +1,5 @@
 
+import axios from "axios";
 import api from "./api";
 
 export interface CreateNoteData {
@@ -23,15 +24,25 @@ export const createNote = async (data: CreateNoteData) => {
   formData.append("branch", data.branch);
   formData.append("pdf", data.pdf);
 
-  const response = await api.post("/api/notes", formData);
-  return response.data;
+  try {
+    const response = await api.post("/api/notes", formData);
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      console.error(
+        "Note upload response:",
+        JSON.stringify(error.response?.data, null, 2)
+      );
+    }
+
+    throw error;
+  }
 };
 
 export const deleteNote = async (id: number) => {
   const response = await api.delete(`/api/notes/${id}`);
   return response.data;
 };
-
 
 export interface UpdateNoteData {
   title: string;

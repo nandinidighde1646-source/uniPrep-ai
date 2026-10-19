@@ -50,3 +50,30 @@ export const updatePYQ = async (
   const response = await api.put(`/api/pyqs/${id}`, data);
   return response.data.data;
 };
+
+
+export interface BulkUploadPYQResult {
+  success: boolean;
+  message: string;
+  count: number;
+}
+
+export const bulkUploadPYQs = async (
+  csv: File,
+  pdfs: File[]
+): Promise<BulkUploadPYQResult> => {
+  const formData = new FormData();
+
+  formData.append("csv", csv);
+
+  pdfs.forEach((pdf) => {
+    formData.append("pdfs", pdf);
+  });
+
+  const response = await api.post(
+    "/api/pyqs/bulk-upload",
+    formData
+  );
+
+  return response.data;
+};

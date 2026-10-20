@@ -9,6 +9,10 @@ console.log("Runtime diagnostic:", {
   databaseUrlLength: process.env.DATABASE_URL?.length ?? 0,
   databaseUrlStartsWithPostgres:
     process.env.DATABASE_URL?.startsWith("postgresql://") ?? false,
+
+
+renderService: process.env.RENDER_SERVICE_NAME ?? "MISSING",
+frontendUrlPresent: Boolean(process.env.FRONTEND_URL),
 });
 const PORT = Number(process.env.PORT) || 5000;
 

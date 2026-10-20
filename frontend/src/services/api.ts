@@ -1,10 +1,12 @@
-import axios from "axios";
+﻿import axios from "axios";
 
 const hostname = window.location.hostname;
 
-const apiBaseURL = hostname.includes("-5173")
-  ? `https://${hostname.replace("-5173", "-5000")}`
-  : "http://localhost:5000";
+const apiBaseURL =
+  import.meta.env.VITE_API_BASE_URL ??
+  (hostname.includes("-5173")
+    ? `https://${hostname.replace("-5173", "-5000")}`
+    : "http://localhost:5000");
 
 const api = axios.create({
   baseURL: apiBaseURL,

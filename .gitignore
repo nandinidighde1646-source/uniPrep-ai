@@ -26,3 +26,7 @@ backups/
 
 # Temporary schema backups
 backend/prisma/schema.before-*.prisma
+
+# Production secrets
+.env.production
+**/.env.production

@@ -10,11 +10,14 @@ import mockTestsRouter from "./routes/mockTests.routes.js";
 
 const app = express();
 
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://9n4wtmqs-5173.inc1.devtunnels.ms",
+  process.env.FRONTEND_URL,
+].filter((origin): origin is string => Boolean(origin));
+
 const corsOptions = {
-  origin: [
-    "http://localhost:5173",
-    "https://9n4wtmqs-5173.inc1.devtunnels.ms",
-  ],
+  origin: allowedOrigins,
   credentials: true,
 };
 

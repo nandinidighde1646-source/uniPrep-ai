@@ -7,3 +7,8 @@ node_modules
 
 # Uploaded PDF files
 uploads/
+
+
+# Production secrets
+.env.production
+**/.env.production

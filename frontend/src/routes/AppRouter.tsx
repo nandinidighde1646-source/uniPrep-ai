@@ -25,7 +25,10 @@ import ManagePYQs from "../pages/Admin/ManagePYQs";
 import ManageUsers from "../pages/Admin/ManageUsers";
 
 import AdminRoute from "../components/AdminRoute/AdminRoute";
-
+import MockTests from "../pages/MockTests/MockTests";
+import MockTestAttempt from "../pages/MockTests/MockTestsAttempt";
+import MockTestResult from "../pages/MockTests/MockTestsResult";
+import ManageMockTests from "../pages/Admin/ManageMockTests";
 function AppRouter() {
   return (
     <Routes>
@@ -48,6 +51,32 @@ function AppRouter() {
             </ProtectedRoute>
           }
         />
+
+        <Route
+  path="mock-tests"
+  element={
+    <ProtectedRoute>
+      <MockTests />
+    </ProtectedRoute>
+  }
+/>
+<Route
+  path="mock-tests/:id"
+  element={
+    <ProtectedRoute>
+      <MockTestAttempt />
+    </ProtectedRoute>
+  }
+/>
+
+<Route
+  path="mock-tests/results/:attemptId"
+  element={
+    <ProtectedRoute>
+      <MockTestResult />
+    </ProtectedRoute>
+  }
+/>
       </Route>
 
       {/* Pages without Navbar/Footer */}
@@ -67,6 +96,7 @@ function AppRouter() {
   <Route index element={<AdminDashboard />} />
   <Route path="notes" element={<ManageNotes />} />
   <Route path="pyqs" element={<ManagePYQs />} />
+  <Route path="mock-tests" element={<ManageMockTests />} />
   <Route path="users" element={<ManageUsers />} />
 </Route>
 

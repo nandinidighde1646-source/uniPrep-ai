@@ -18,9 +18,9 @@ export const dashboardItems = [
     path: "/ai-chat",
   },
   {
-    icon: "📝",
-    title: "Mock Tests",
-    description: "Coming Soon",
-    path: "/dashboard",
-  },
+  icon: "📝",
+  title: "Mock Tests",
+  description: "Practice with timed tests and check your results",
+  path: "/mock-tests",
+},
 ];

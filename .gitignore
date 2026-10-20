@@ -19,3 +19,10 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+# Local database backups
+backups/
+*.dump
+*.sql.gz
+
+# Temporary schema backups
+backend/prisma/schema.before-*.prisma

@@ -1,3 +1,4 @@
+
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,14 +14,15 @@ enum Role {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  name      String
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  college   String?
-  avatar    String?
-  createdAt DateTime @default(now())
+  id               Int                @id @default(autoincrement())
+  name             String
+  email            String             @unique
+  password         String
+  role             Role               @default(USER)
+  college          String?
+  avatar           String?
+  createdAt        DateTime           @default(now())
+  mockTestAttempts MockTestAttempt[]
 }
 
 model Note {
@@ -39,7 +41,70 @@ model PYQ {
   subject   String
   semester  Int
   branch    String
-  year      Int @default(2025)
+  year      Int      @default(2025)
   fileUrl   String
   createdAt DateTime @default(now())
+}
+
+model MockTest {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  subject     String
+  semester    Int
+  branch      String   @default("CSE-CY")
+  duration    Int
+  totalMarks  Int
+  isPublished Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  questions Question[]
+  attempts  MockTestAttempt[]
+}
+
+model Question {
+  id            Int      @id @default(autoincrement())
+  mockTestId    Int
+  questionText  String   @db.Text
+  optionA       String   @db.Text
+  optionB       String   @db.Text
+  optionC       String   @db.Text
+  optionD       String   @db.Text
+  correctOption String
+  explanation   String?  @db.Text
+  marks         Int      @default(1)
+  createdAt     DateTime @default(now())
+
+  mockTest MockTest        @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
+  answers  AttemptAnswer[]
+}
+
+model MockTestAttempt {
+  id          Int       @id @default(autoincrement())
+  userId      Int
+  mockTestId  Int
+  score       Int       @default(0)
+  totalMarks  Int
+  startedAt   DateTime  @default(now())
+  submittedAt DateTime?
+
+  user     User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  mockTest MockTest        @relation(fields: [mockTestId], references: [id], onDelete: Cascade)
+  answers  AttemptAnswer[]
+
+  @@index([userId, mockTestId])
+}
+
+model AttemptAnswer {
+  id             Int      @id @default(autoincrement())
+  attemptId      Int
+  questionId     Int
+  selectedOption String?
+  isCorrect      Boolean  @default(false)
+
+  attempt  MockTestAttempt @relation(fields: [attemptId], references: [id], onDelete: Cascade)
+  question Question       @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+  @@unique([attemptId, questionId])
 }

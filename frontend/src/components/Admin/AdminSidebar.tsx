@@ -1,9 +1,11 @@
+
 import {
   LayoutDashboard,
   FileText,
   BookOpen,
   Users,
   LogOut,
+  ClipboardList,
 } from "lucide-react";
 import { NavLink } from "react-router-dom";
 
@@ -25,6 +27,11 @@ function AdminSidebar() {
       icon: <FileText size={20} />,
     },
     {
+      name: "Manage Mock Tests",
+      path: "/admin/mock-tests",
+      icon: <ClipboardList size={20} />,
+    },
+    {
       name: "Manage Users",
       path: "/admin/users",
       icon: <Users size={20} />,
@@ -32,15 +39,13 @@ function AdminSidebar() {
   ];
 
   return (
-    <aside className="w-64 bg-gray-900 text-white flex flex-col">
-      {/* Logo */}
-      <div className="p-6 border-b border-gray-700">
+    <aside className="flex w-64 flex-col bg-gray-900 text-white">
+      <div className="border-b border-gray-700 p-6">
         <h1 className="text-2xl font-bold">UniPrep AI</h1>
         <p className="text-sm text-gray-400">Admin Panel</p>
       </div>
 
-      {/* Navigation */}
-      <nav className="flex-1 mt-6">
+      <nav className="mt-6 flex-1">
         {menuItems.map((item) => (
           <NavLink
             key={item.path}
@@ -50,7 +55,7 @@ function AdminSidebar() {
               `flex items-center gap-3 px-6 py-3 transition ${
                 isActive
                   ? "bg-green-600 text-white"
-                  : "hover:bg-gray-800 text-gray-300"
+                  : "text-gray-300 hover:bg-gray-800"
               }`
             }
           >
@@ -60,9 +65,11 @@ function AdminSidebar() {
         ))}
       </nav>
 
-      {/* Logout */}
       <div className="border-t border-gray-700 p-4">
-        <button className="flex items-center gap-3 text-red-400 hover:text-red-300">
+        <button
+          type="button"
+          className="flex items-center gap-3 text-red-400 hover:text-red-300"
+        >
           <LogOut size={20} />
           Logout
         </button>

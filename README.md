@@ -706,3 +706,9 @@ of truth for implementation details.*
 
 #Admin id - artesting001@gmail.com
 password - 123456
+
+Live website - https://uni-prep-4fwy6m9vq-nandinidighde1646-source.vercel.app?utm_source=chatgpt.com
+
+GitHub Repository - https://github.com/nandinidighde1646-source/uniPrep-ai?utm_source=chatgpt.com
+
+Backend - Render - https://uniprep-ai-backend.onrender.com?utm_source=chatgpt.com

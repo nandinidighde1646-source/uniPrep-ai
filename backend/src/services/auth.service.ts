@@ -32,12 +32,14 @@ export const registerService = async (
   });
 
   return {
-    id: user.id,
-    name: user.name,
-    email: user.email,
-    role: user.role,
-    createdAt: user.createdAt,
-  };
+  id: user.id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  college: user.college,
+  avatar: user.avatar,
+  createdAt: user.createdAt,
+};
 };
 
 export const loginService = async (
@@ -78,11 +80,13 @@ export const loginService = async (
   return {
     token,
     user: {
-      id: user.id,
-      name: user.name,
-      email: user.email,
-      role: user.role,
-      createdAt: user.createdAt,
-    },
+  id: user.id,
+  name: user.name,
+  email: user.email,
+  role: user.role,
+  college: user.college,
+  avatar: user.avatar,
+  createdAt: user.createdAt,
+},
   };
 };

@@ -1,5 +1,6 @@
 import prisma from "../prisma/prisma.js";
 
+
 export const getAllNotesService = async () => {
   return await prisma.note.findMany();
 };

@@ -1,4 +1,5 @@
 import type { UserProfile } from "../../types/user";
+import { UserRound } from "lucide-react";
 
 type ProfileCardProps = {
   user: UserProfile;
@@ -12,11 +13,9 @@ function ProfileCard({
   return (
     <div className="max-w-md w-full bg-white rounded-xl shadow-lg p-8">
 
-      <img
-        src={user.avatar}
-        alt={user.name}
-        className="w-32 h-32 rounded-full mx-auto object-cover"
-      />
+      <div className="w-32 h-32 rounded-full mx-auto bg-gray-200 flex items-center justify-center">
+        <UserRound className="w-16 h-16 text-gray-500" />
+      </div>
 
       <h2 className="text-2xl font-bold text-center mt-4">
         {user.name}

@@ -13,7 +13,7 @@ function Profile() {
     name: authUser?.name || "",
     email: authUser?.email || "",
     college: "RGPV",
-    avatar: "https://i.pravatar.cc/150?img=3",
+    avatar: " ",
   });
 
   const [isEditing, setIsEditing] = useState(false);
